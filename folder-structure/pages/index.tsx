@@ -6,7 +6,7 @@ import Link from 'next/link';
 import styles from '../styles/Home.module.css';
 
 export default function Home({ users }) {
-  console.log({ users });
+  // console.log({ users });
   return (
     <ul>
       {users.map((user) => (
@@ -35,6 +35,8 @@ export const getServerSideProps: GetServerSideProps = async () => {
       username: p.name,
     };
   });
+
+  console.log({users})
 
   return {
     props: {

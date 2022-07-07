@@ -6,7 +6,7 @@ import Link from 'next/link';
 import styles from '../styles/Home.module.css';
 
 export default function UserPage({ user }) {
-  console.log({ user });
+  // console.log({ user });
   return (
     <div>
       <div>
@@ -59,7 +59,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
     });
     // console.log({ response: response.data });
 
-    console.log({ response: response.status });
+    // console.log({ response: response.status });
     const user = {
       profile_picture: 'https://i.pravatar.cc/300',
       username: response.data.name,
@@ -76,7 +76,7 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
       },
     };
   } catch (e) {
-    console.log('e');
+    console.log('e', e);
     return {
       notFound: true
     }
