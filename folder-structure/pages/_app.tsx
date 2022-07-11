@@ -10,6 +10,11 @@ function MyApp({ Component, pageProps }) {
     <ApolloProvider client={apolloClient}>
       <Head>
         <link rel='manifest' href='/manifest.json' />
+        <link
+          href='https://unpkg.com/tailwindcss@^2/dist/
+  tailwind.min.css'
+          rel='stylesheet'
+        />
       </Head>
       <Component {...pageProps} />
     </ApolloProvider>
