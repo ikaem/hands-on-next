@@ -1,10 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  sassOptions: {
-    outputStyle: "compressed"
-    // and more options here
-  }
-}
+  images: {
+    domains: ['picsum.photos'],
+  },
+  // sassOptions: {
+  //   outputStyle: "compressed"
+  //   // and more options here
+  // }
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

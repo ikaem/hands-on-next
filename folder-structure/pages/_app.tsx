@@ -6,30 +6,44 @@ import ShoppingCartContext, {
 } from '../components/context/shopping-cart-context';
 import TopBar from '../components/organisms/TopBar';
 import { useApollo } from '../lib/grapqhl';
+import 'tailwindcss/tailwind.css';
+import { ThemeProvider } from 'next-themes';
 // import '../styles/globals.css';
 
-const theme = extendTheme({
-  colors: {
-    brand: {
-      100: '#ffebee',
-      200: '#e57373',
-      300: '#f44336',
-      400: '#e53935',
-    },
-  },
-});
+// const chakraTheme = extendTheme({
+//   colors: {
+//     brand: {
+//       100: '#ffebee',
+//       200: '#e57373',
+//       300: '#f44336',
+//       400: '#e53935',
+//     },
+//   },
+// });
 
 function MyApp({ Component, pageProps }) {
-  const apolloClient = useApollo(pageProps.initialApolloState);
+  // const apolloClient = useApollo(pageProps.initialApolloState);
 
+  // tailwind below
   return (
-    <ChakraProvider>
-      <TopBar />
-      <Box maxWidth={'container.xl'} margin='auto'>
+    <>
+    {/* apparently, this sets a dark class to the main html tag */}
+    {/* actually, it sets light class  */}
+      <ThemeProvider attribute='class'>
         <Component {...pageProps} />
-      </Box>
-    </ChakraProvider>
+      </ThemeProvider>
+    </>
   );
+
+  // chakra below
+  // return (
+  //   <ChakraProvider>
+  //     <TopBar />
+  //     <Box maxWidth={'container.xl'} margin='auto'>
+  //       <Component {...pageProps} />
+  //     </Box>
+  //   </ChakraProvider>
+  // );
 
   {
     /* <Head>
@@ -41,10 +55,11 @@ function MyApp({ Component, pageProps }) {
         />
       </Head> */
   }
+  // apollo below
   {
     /*       <ApolloProvider client={apolloClient}>
         <ShoppingCartProvider>
-          <ChakraProvider theme={theme}>
+          <ChakraProvider theme={chakraTheme}>
             <Component {...pageProps} />
           </ChakraProvider>
         </ShoppingCartProvider>
