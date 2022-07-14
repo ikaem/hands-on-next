@@ -27,10 +27,16 @@ function MyApp({ Component, pageProps }) {
   // tailwind below
   return (
     <>
-    {/* apparently, this sets a dark class to the main html tag */}
-    {/* actually, it sets light class  */}
+      {/* apparently, this sets a dark class to the main html tag */}
+      {/* actually, it sets light class  */}
       <ThemeProvider attribute='class'>
-        <Component {...pageProps} />
+        <div
+          className='dark:bg-gray-900 bg-gray-50 w-full min-
+h-screen'
+        >
+          <TopBar />
+          <Component {...pageProps} />
+        </div>
       </ThemeProvider>
     </>
   );
