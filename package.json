@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@fastify/nextjs": "^8.0.2"
+  }
+}
