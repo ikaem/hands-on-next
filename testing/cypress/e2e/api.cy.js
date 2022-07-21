@@ -1,20 +1,21 @@
 // testing\cypress\integration\api.spec.js
+// import cy from "cypress"
 
 describe('articles APIs', () => {
-  test('should correctly set application/json header', () => {
+  it('should correctly set application/json header', () => {
     cy.request('http://localhost:3000/api/articles')
       .its('headers')
       .its('content-type')
       .should('include', 'application/json');
   });
 
-  test('should correctly return a 200 status code', () => {
+  it('should correctly return a 200 status code', () => {
     cy.request('http://localhost:3000/api/articles')
       .its('status')
       .should('be.equal', 200);
   });
 
-  test('should correctly return a list of articles', (done) => {
+  it('should correctly return a list of articles', (done) => {
     cy.request('http://localhost:3000/api/articles')
       .its('body')
       .each((article) => {
@@ -24,5 +25,14 @@ describe('articles APIs', () => {
 
         done();
       });
+  });
+
+  it('should return 404 when no article is found', () => {
+    cy.request({
+      url: 'http://localhost:3000/api/article?id=noId',
+      failOnStatusCode: false,
+    })
+      .its('status')
+      .should('be.equal', 404);
   });
 });

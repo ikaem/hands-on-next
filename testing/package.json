@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "test": "jest",
-    "cypress": "cypress run"
+    "cypress": "cypress run",
+    "build-start": "npm run build && npm run start",
+    "e2e": "start-server-and-test next start http://localhost:3000 cypress run"
   },
   "dependencies": {
     "autoprefixer": "^10.3.1",
@@ -15,6 +17,7 @@
     "postcss": "^8.3.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "start-server-and-test": "^1.14.0",
     "tailwindcss": "^2.2.7"
   },
   "devDependencies": {
