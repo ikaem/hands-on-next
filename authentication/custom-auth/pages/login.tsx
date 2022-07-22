@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import React, { FormEventHandler, useState } from 'react';
 import styles from '../styles/app.module.css';
 
-const Home = () => {
+const Login = () => {
   const [loginError, setLoginError] = useState(null);
 
   const router = useRouter();
@@ -37,4 +37,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Login;
