@@ -1,11 +1,14 @@
 import { useRouter } from 'next/router';
 import React, { FormEventHandler, useState } from 'react';
+import { useAuth } from '../lib/hooks/auth/use-auth';
+import { handleLogin } from '../services/client/authentication/handle-login';
 import styles from '../styles/app.module.css';
 
 const Home = () => {
   const [loginError, setLoginError] = useState(null);
 
   const router = useRouter();
+  const { user, loggedIn, loading, error } = useAuth();
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -21,6 +24,12 @@ const Home = () => {
       setLoginError(e.message);
     }
   };
+
+  if (loading) return <p>Loading...</p>;
+  if (loggedIn) {
+    router.push('/protected-route');
+    return null;
+  }
 
   return (
     <div className={styles.container}>
