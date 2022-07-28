@@ -1,29 +1,38 @@
+import { Grid } from '@chakra-ui/react';
 import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next';
-import graphql from '../lib/graphql';
+import { ProductCard } from '../components/product-card';
+import { graphqlClient } from '../lib/graphql';
 import { GET_ALL_PRODUCTS } from '../lib/graphql/queries/get-all-products';
 
-interface ProductImage {
+export interface ProductImage {
   id: string;
   url: string;
 }
 
-interface Product {
+export interface Product {
   id: string;
   name: string;
   price: number;
   images: ProductImage[];
+  description?: string;
 }
 
 type HomePageProps = InferGetStaticPropsType<typeof getStaticProps>;
 
 const HomePage: NextPage<HomePageProps> = ({ products }) => {
-  return <div>Karlo</div>;
+  return (
+    <Grid gridTemplateColumns={'repeat(4, 1fr'} gap='5'>
+      {products.map((p) => (
+        <ProductCard key={p.id} {...p} />
+      ))}
+    </Grid>
+  );
 };
 
 export const getStaticProps: GetStaticProps<{
   products: Product[];
 }> = async () => {
-  const { products } = await graphql.request<{ products: Product[] }>(
+  const { products } = await graphqlClient.request<{ products: Product[] }>(
     GET_ALL_PRODUCTS
   );
 
@@ -31,10 +40,8 @@ export const getStaticProps: GetStaticProps<{
     props: {
       products,
     },
-    revalidate: 60
+    revalidate: 60,
   };
 };
 
 export default HomePage;
-
-
