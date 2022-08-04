@@ -28,8 +28,6 @@ const ProductPage: NextPage<ProductPageProps> = ({ product }) => {
   const { cartItems, addItemToCart } = useCartContext();
 
   const isAlreadyInCart = product.id in cartItems;
-  console.log({ quantity });
-  console.log({ cartItems });
 
   return (
     <Flex rounded='xl' boxShadow='2xl' w='full' p='16' bgColor='white'>
@@ -88,15 +86,10 @@ export const getStaticProps: GetStaticProps<{
   product: null | Product;
 }> = async ({ params }) => {
   const { id } = params;
-  console.log({ params });
   const { product } = await graphqlClient.request<{ product: Product }>(
     GET_PRODUCT,
     { id }
   );
-
-  // console.log({ data });
-
-  // console.log({ products });
 
   // const product = products[0] ? products[0] : null;
   return {

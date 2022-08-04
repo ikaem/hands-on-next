@@ -12,7 +12,7 @@ interface CartContextValues {
   setState: Dispatch<SetStateAction<CartItems>>;
 }
 
-type CartItems = Record<string, number>;
+export type CartItems = Record<string, number>;
 
 export const CartContext = createContext<CartContextValues>({
   state: {},
@@ -24,7 +24,6 @@ export const CartContextProvider: React.FC<PropsWithChildren> = ({
 }) => {
   const [state, setState] = useState<CartItems>({});
 
-  console.log({ state });
   return (
     <CartContext.Provider
       value={{
@@ -41,26 +40,17 @@ export const useCartContext = () => {
   const { state, setState } = useContext(CartContext);
 
   const addItemToCart = (productId: string, quantity: number) => {
-    console.log({
-      productId,
-      quantity,
-    });
-
-    console.log({ setState });
     setState((prev) => {
       const newState = {
         ...prev,
         [productId]: quantity,
       };
 
-      console.log({ newState });
       return {
         ...prev,
         [productId]: quantity,
       };
     });
-
-    console.log("after")
   };
 
   return {

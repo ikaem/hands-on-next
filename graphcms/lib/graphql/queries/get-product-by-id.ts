@@ -7,6 +7,11 @@ export const GET_PRODUCT_BY_ID = gql`
       name
       price
       slug
+      description
+      images {
+        id
+        url
+      }
     }
   }
 `;
