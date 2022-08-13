@@ -1,9 +1,10 @@
-import { Box, Divider, Text } from '@chakra-ui/react';
+import { Box, Button, Divider, Text } from '@chakra-ui/react';
 import { NextPage } from 'next';
 import React, { useEffect, useState } from 'react';
 import { Product } from '.';
 import { CartItems, useCartContext } from '../contexts/cart-context';
 import { graphqlClient } from '../lib/graphql';
+import { getStripe } from '../lib/stripe';
 import { GET_PRODUCT_BY_ID } from '../lib/graphql/queries/get-product-by-id';
 
 const Cart: NextPage = () => {
@@ -19,14 +20,35 @@ const Cart: NextPage = () => {
 
   console.log({ totalPrice });
 
+  console.log({cartItems: Object.keys(cartItems)})
+
   useEffect(() => {
     if (!hasProducts) return;
     graphqlClient
       .request(GET_PRODUCT_BY_ID, {
-        ids: ['ckdu44mn40gxh010405uwgbtw'],
+        ids: Object.keys(cartItems),
       })
       .then((data) => setProducts(data.products));
-  }, [hasProducts]);
+  }, [cartItems, hasProducts]);
+
+  const handlePayment = async () => {
+    const stripe = await getStripe();
+
+    const res = await fetch('/api/checkout', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        cartItems,
+      }),
+    });
+
+    const { session } = await res.json();
+    await stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+  };
 
   return (
     <Box
@@ -43,6 +65,7 @@ const Cart: NextPage = () => {
       <Box>
         <Text>The cart value is ${(totalPrice / 100).toFixed(2)}</Text>
       </Box>
+      <Button onClick={handlePayment}>Pay now</Button>
     </Box>
   );
 };
@@ -51,6 +74,11 @@ export default Cart;
 
 function getTotal(products: Product[], cartItems: CartItems) {
   if (products.length === 0) return 0;
+
+  console.log({
+    products,
+    cartItems,
+  });
 
   const cartItemsCostMap: Record<
     string,
@@ -86,9 +114,13 @@ function getTotal(products: Product[], cartItems: CartItems) {
     return item;
   });
 
+  console.log({ cartItemsCostArray });
+
   const totalPrice = cartItemsCostArray.reduce((acc, current) => {
     return acc + current.cost;
   }, 0);
+
+  console.log({ totalPrice });
 
   return totalPrice;
 

@@ -36,6 +36,8 @@ export const getStaticProps: GetStaticProps<{
     GET_ALL_PRODUCTS
   );
 
+  // const products = [];
+
   return {
     props: {
       products,

@@ -5,6 +5,8 @@ const GRAPHCMS_API_KEY = process.env.GRAPHCMS_API_KEY;
 
 const authorization = `Bearer ${GRAPHCMS_API_KEY}`;
 
+console.log({GRAPHCMS_ENDPOINT})
+
 export const graphqlClient = new GraphQLClient(GRAPHCMS_ENDPOINT, {
   headers: {
     ...(GRAPHCMS_API_KEY && { authorization }),
